@@ -1,0 +1,63 @@
+package tabela;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+
+/* @author Michael Andre */
+public class TabelaHashMap {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        int a = 0;
+        
+        Map<Integer,Registrador_Ip> registraIP = new HashMap<>();
+        
+        FileInputStream stream1 = new FileInputStream("C:\\Users\\Michael Andre\\Documents\\endereçosIP.txt");
+        InputStreamReader reader1 = new InputStreamReader(stream1);
+        BufferedReader br1 = new BufferedReader(reader1);
+        
+        for (int i = 0; i < 100; i++) {
+            String b = br1.readLine();
+            Registrador_Ip obj = new Registrador_Ip(b, 0);
+            registraIP.put(i, obj);
+        }
+       
+        FileInputStream stream = new FileInputStream("C:\\Users\\Michael Andre\\Documents\\acessoLog.log");
+        InputStreamReader reader = new InputStreamReader(stream);
+        BufferedReader br = new BufferedReader(reader);
+        
+        while (true) {
+
+            String b = br.readLine();
+            if (b==null) {
+                break;
+            }
+            int indice = b.indexOf("-");
+            b = b.substring(0, indice - 1);
+            for (int i = 0; i < 100; i++) {
+                if (registraIP.get(i).getIP() != null && b.equals(registraIP.get(i).getIP())) {
+                    registraIP.get(i).setContador(registraIP.get(i).getContador()+1);
+                }
+            }
+            
+            a=a+1;
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        for (int i = 0; i < 100; i++) {
+            System.out.println(registraIP.get(i).toString());
+        }
+        System.out.println("o total de linhas é : "+ a);
+    }
+    
+}
