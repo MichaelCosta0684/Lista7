@@ -1,0 +1,71 @@
+package tabela;
+
+import java.io.BufferedReader;
+import java.util.LinkedList;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+/*@author Michael Andre */
+public class Tabela {
+
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        int a = 0;
+
+        List<Registrador_Ip> k = new LinkedList<>();
+
+        FileInputStream stream1 = new FileInputStream("C:\\Users\\Michael Andre\\Documents\\endereçosIP.txt");
+        InputStreamReader reader1 = new InputStreamReader(stream1);
+        BufferedReader br1 = new BufferedReader(reader1);
+
+        for (int i = 0; i < 100; i++) {
+            String c = br1.readLine();
+            Registrador_Ip obje = new Registrador_Ip(c, 0);
+
+            k.add(obje);
+        }
+
+        FileInputStream stream = new FileInputStream("C:\\Users\\Michael Andre\\Documents\\acessoLog.log");
+        InputStreamReader reader = new InputStreamReader(stream);
+        BufferedReader br = new BufferedReader(reader);
+        Iterator<Registrador_Ip> it = k.iterator();
+
+        while (true) {
+
+            String b = br.readLine();
+            if (b==null) {
+                break;
+            }
+            int indice = b.indexOf("-");
+            b = b.substring(0, indice - 1);
+            for (Registrador_Ip ip : k) {
+                if (ip != null && b.equals(ip.getIP())) {
+
+                    ip.setContador(ip.getContador() + 1);
+                }
+            }
+            
+            a=a+1;
+        }
+
+        
+
+    
+
+      
+        System.out.println("===============================================================================");
+        while (it.hasNext()) {
+            String valor = it.next().toString();
+            System.out.println(valor);
+
+        }
+        System.out.println(a);
+
+    }
+
+}
